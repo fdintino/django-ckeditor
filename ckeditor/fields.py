@@ -3,11 +3,6 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
-
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["^ckeditor\.fields\.RichTextField", "^ckeditor\.fields\.RichTextFormField"])
-
-
 class RichTextField(models.TextField):
     def __init__(self, config_name='default', *args, **kwargs):
         self.config_name = config_name
@@ -26,3 +21,11 @@ class RichTextFormField(forms.fields.Field):
     def __init__(self, config_name='default', *args, **kwargs):
         kwargs.update({'widget': CKEditorWidget(config_name=config_name)})
         super(RichTextFormField, self).__init__(*args, **kwargs)
+
+
+try:
+    from south.modelsinspector import add_introspection_rules
+except ImportError:
+    pass
+else:
+    add_introspection_rules([],["^ckeditor\.fields\.RichTextField",])
