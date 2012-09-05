@@ -612,5 +612,22 @@ border-radius: 3px;
 padding: 10px;
 }
 .cke_skin_bootstrap .cke_dialog_ui_checkbox {
-line-height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    overflow: hidden;
+}
+.cke_skin_bootstrap .cke_dialog_ui_checkbox input, .cke_skin_bootstrap .cke_dialog_ui_checkbox label {
+    float: left;
+    line-height: 20px;
+    position: static !important;
+    display: block;
+}
+
+.cke_skin_bootstrap .cke_dialog_ui_checkbox input {
+    height: 1em;
+    margin-top: 4px;
+}
+
+.cke_skin_bootstrap .cke_dialog_ui_checkbox label {
+    margin-left: 10px;
 }
