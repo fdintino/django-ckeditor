@@ -31,7 +31,8 @@ CKEDITOR.plugins.add('codemirror', {
             if (editor.mode == 'source') {
                 var sourceAreaElement = editor.textarea,
                     holderElement = sourceAreaElement.getParent();
-                var holderHeight = holderElement.$.clientHeight + 'px';
+                var sourceWidth = editor.config.width || holderElement.$.clientWidth + 'px';
+                var sourceHeight = editor.config.height || holderElement.$.clientHeight + 'px';
                 /* http://codemirror.net/manual.html */
                 var codemirrorInit = CodeMirror.fromTextArea(
                 editor.textarea.$, {
@@ -46,17 +47,20 @@ CKEDITOR.plugins.add('codemirror', {
                     indentWithTabs: true,
                     /* Numbers lower than this suck megabytes of memory very quickly out of firefox */
                     undoDepth: 1,
-                    height: editor.config.height || holderHeight,
+                    height: sourceHeight,
+                    width: sourceWidth,
                     /* Adapt to holder height */
                     textWrapping: false,
                     lineNumbers: false,
                     enterMode: 'flat',
-                    wordWrap: true,
-                    extraKeys: {
-        				"'>'": function(cm) { cm.closeTag(cm, '>'); },
-        				"'/'": function(cm) { cm.closeTag(cm, '/'); }
-        			}
-                });
+					extraKeys: {
+						"'>'": function(cm) { cm.closeTag(cm, '>'); },
+						"'/'": function(cm) { cm.closeTag(cm, '/'); }
+					}
+				});
+				if (sourceWidth || sourceHeight) {
+					codemirrorInit.setSize(sourceWidth, sourceHeight);
+				}
                 // Commit source data back into 'source' mode.
                 editor.on('beforeCommandExec', function(e) {
                     // Listen to this event once.

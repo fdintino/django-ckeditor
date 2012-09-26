@@ -3,24 +3,40 @@ Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-.cke_skin_bootstrap *,.cke_skin_bootstrap a:hover,.cke_skin_bootstrap a:link,.cke_skin_bootstrap a:visited,.cke_skin_bootstrap a:active{
-margin:0;
-padding:0;
-border:0;
-background:transparent;
-text-decoration:none;
-font:normal normal normal 100% Sans-Serif;
-width:auto;
-height:auto;
-border-collapse:collapse;
-text-align:left;
-vertical-align:baseline;
-white-space:nowrap;
-cursor:auto;
-color:#000;
-float:none;
-font-size:12px;
-font-family:Arial,Helvetica,Tahoma,Verdana,Sans-Serif;
+.cke_skin_bootstrap *,
+.cke_skin_bootstrap a:hover,
+.cke_skin_bootstrap a:link,
+.cke_skin_bootstrap a:visited,
+.cke_skin_bootstrap a:active {
+    cursor: auto;
+    line-height: normal;
+    font-size: 12px;
+    font-family:Arial,Helvetica,Tahoma,Verdana,Sans-Serif;
+    background: transparent;
+}
+.cke_skin_bootstrap a:hover,
+.cke_skin_bootstrap a:link,
+.cke_skin_bootstrap a:visited,
+.cke_skin_bootstrap a:active {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    text-align: left;
+    white-space: nowrap;
+    cursor: auto;
+    color: #000;
+    float: none;
+}
+.cke_skin_bootstrap tr, .cke_skin_bootstrap td, .cke_skin_bootstrap table, .cke_skin_bootstrap tbody {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-collapse: collapse;
+    vertical-align: baseline;
+    text-align: left;
 }
 .cke_skin_bootstrap tr, .cke_skin_bootstrap td {
     border: 0;
@@ -68,7 +84,7 @@ border-bottom-color: #a2a2a2;
  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-padding:19px;
+padding:12px 15px 10px 12px;
 border-radius:4px;
 outline: none !important;
 }
@@ -93,6 +109,7 @@ display:inline-table;
 width:100%;
 }
 .cke_skin_bootstrap .cke_browser_ie .cke_editor,.cke_skin_bootstrap .cke_browser_webkit .cke_editor{
+border: 0;
 display:table;
 }
 .cke_skin_bootstrap .ltr .cke_browser_ie iframe{
@@ -315,7 +332,8 @@ white-space:normal;
 }
 .cke_skin_bootstrap .cke_toolbox{
 clear:both;
-padding-bottom:1px;
+padding-bottom:2px;
+overflow:hidden;
 }
 .cke_skin_bootstrap a.cke_toolbox_collapser,.cke_skin_bootstrap a:hover.cke_toolbox_collapser{
 background:url(images/sprites.png) 3px -1366px no-repeat;
@@ -820,10 +838,11 @@ direction:ltr;
 }
 
 .cke_skin_bootstrap .cke_path{
-display:inline-block;
+    display: none;
+/*display:inline-block;
 float:left;
 margin-top:5px;
-}
+*/}
 .cke_skin_bootstrap .cke_rtl .cke_path{
 float:right;
 }

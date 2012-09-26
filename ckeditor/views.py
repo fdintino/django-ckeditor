@@ -1,12 +1,15 @@
 import os
 import re
+import copy
 from urlparse import urlparse, urlunparse
 from datetime import datetime
 
+from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils import simplejson
 
 try:
     from PIL import Image, ImageOps
@@ -21,6 +24,11 @@ except ImportError:
     # same function (for compatability with pre-1.1 Djangos)
     def csrf_exempt(fn):
         return fn
+
+
+from .widgets import DEFAULT_CONFIG
+from .utils import validate_configs
+
 
 THUMBNAIL_SIZE = (75, 75)
 
@@ -181,3 +189,25 @@ def browse(request):
         'images': get_image_browse_urls(request.user),
     })
     return render_to_response('browse.html', context)
+
+
+def configs(request):
+    response_js = ''
+    json_encode = simplejson.JSONEncoder().encode
+    configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
+    merged_configs = {}
+    if configs is not None:
+        try:
+            validate_configs(configs)
+        except ImproperlyConfigured:
+            raise
+        else:
+            for config_name, config in configs.iteritems():
+                merged_config = copy.deepcopy(DEFAULT_CONFIG)
+                merged_config.update(config)
+                merged_configs[config_name] = merged_config
+            response_js = ("var DJCKEDITOR = "
+                           "(typeof DJCKEDITOR == 'object') ? DJCKEDITOR : {};\n"
+                           "DJCKEDITOR.configs = %s") % json_encode(merged_configs)
+
+    return HttpResponse(response_js, mimetype="application/x-javascript")
