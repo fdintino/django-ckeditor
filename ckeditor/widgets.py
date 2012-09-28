@@ -37,7 +37,7 @@ class CKEditorWidget(forms.Textarea):
 
         media = super(CKEditorWidget, self).media
         media.add_js([
-            media_prefix + 'ckeditor/ckeditor/ckeditor.js?timestamp=C8Q2',
+            media_prefix + 'ckeditor/ckeditor/ckeditor.js?timestamp=C83I',
             reverse('ckeditor.views.configs'),
         ])
         return media
