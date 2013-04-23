@@ -119,10 +119,11 @@ border: 1px solid #b9b9b9;
 outline: none;
 }
 .cke_skin_bootstrap textarea.cke_source{
-font-family:'Courier New',Monospace;
+font-family:Consolas,Inconsolata,Menlo,Monaco,"Courier New",monospace;
 font-size:small;
 background-color:#fff;
 white-space:pre;
+padding: 8px;
 }
 .cke_skin_bootstrap .cke_browser_iequirks textarea.cke_source{
 _white-space:normal;

@@ -631,3 +631,6 @@ padding: 10px;
 .cke_skin_bootstrap .cke_dialog_ui_checkbox label {
     margin-left: 10px;
 }
+.cke_skin_bootstrap .cke_path {
+	display: none;
+}
