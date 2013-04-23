@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils.functional import lazy, Promise
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
@@ -10,7 +11,19 @@ from django.utils import simplejson
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
 
-json_encode = simplejson.JSONEncoder().encode
+
+class LazyEncoder(simplejson.JSONEncoder):
+
+    def default(self, obj):
+        if isinstance(obj, Promise):
+            lazy_unpickle, (func, args, kwargs, resultclasses) = obj.__reduce__()
+            return func(*args, **kwargs)
+        return obj
+
+
+json_encode = LazyEncoder().encode
+
+reverse_lazy = lazy(reverse, str)
 
 DEFAULT_CONFIG = {
     'skin': 'django',
@@ -19,6 +32,8 @@ DEFAULT_CONFIG = {
     'width': 835,
     'filebrowserWindowWidth': 940,
     'filebrowserWindowHeight': 725,
+    'filebrowserUploadUrl': reverse_lazy('ckeditor_upload'),
+    'filebrowserBrowseUrl': reverse_lazy('ckeditor_browse'),
 }
 
 
@@ -69,8 +84,6 @@ class CKEditorWidget(forms.Textarea):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
-        self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
-        self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_unicode(value)),

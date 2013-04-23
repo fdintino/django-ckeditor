@@ -62,6 +62,27 @@ Optional
            },
        }
 
+  The config options ``filebrowserBrowseUrl`` and ``filebrowserUploadUrl`` allow you to override the urls that CKEditor uses for browsing and uploading images, respectively. The values of these options are strings, but they can also be callables which return strings, which enables the use of url patterns with a moderate amount of boilerplate:
+
+    from django.utils.functional import lazy
+
+    def url_reverse(pattern):
+    	from django.core.urlresolvers import reverse
+    	return reverse(pattern)
+
+    def fb_reverse(pattern):
+    	return '%s?pop=3' % url_reverse(pattern)
+
+    lazy_fb_reverse = lazy(fb_reverse, str)
+
+    CKEDITOR_CONFIGS = {
+        'default': {
+            'filebrowserBrowseUrl': lazy_fb_reverse('filebrowser.views.browse'),
+            'filebrowserUploadUrl': lazy_fb_reverse('filebrowser.views.upload'),
+            # ...
+        }
+    }
+
 Usage
 -----
 
